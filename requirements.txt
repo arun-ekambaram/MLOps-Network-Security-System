@@ -1,4 +1,4 @@
-python-dotenv #specifically used to call environment variables
+python-dotenv
 pandas
 numpy
-
+setuptools
