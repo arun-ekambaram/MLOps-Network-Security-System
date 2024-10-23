@@ -1,4 +1,7 @@
 import sys
+import sys
+sys.path.append('/Users/arunekambaram/Desktop/MLOps/MLOps-Network-Security-System')
+
 from network_security.logging import logger
 
 class NetworkSecurityException(Exception):
@@ -14,9 +17,10 @@ class NetworkSecurityException(Exception):
         return "Error occured in python script name [{0} line number [{1}] error message [{2}]".format(self.file_name, self.lineno, str(self.error_message))
     
 
-if __name__ == '__main__':
-    try:
-        a=1/10
-        print("this will not be printed",a)
-    except Exception as e:
-        raise NetworkSecurityException(e, sys) 
+# if __name__ == '__main__':
+#     try:
+#         logger.logging.info("Entering the try block")
+#         a=1/0
+#         print("this will not be printed",a)
+#     except Exception as e:
+#         raise NetworkSecurityException(e, sys) 
