@@ -29,4 +29,11 @@ def get_requirements()-> List[str]:
 
     return requirement_lst
 
-print(get_requirements())
+setup(
+    name ='NetworkSecurity',
+    version="0.0.1",
+    author="Arun Ekambaram",
+    author_email ="arunekambaram173@gmail.com",
+    packages=find_packages(),
+    install_requires = get_requirements()
+)
