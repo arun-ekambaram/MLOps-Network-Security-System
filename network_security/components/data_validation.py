@@ -6,10 +6,11 @@ from network_security.logging.logger import logging
 from scipy.stats import ks_2samp #check two samples to find wheather data drift is there or not
 import pandas as pd
 import os, sys
+from network_security.utils.main_utils.utils import read_yaml_file
 
 class DataValidation:
     def __init__(self,data_ingestion_artifact: DataIngestionArtifact,
-                 data_validation_config: DataValidationConfig)
+                 data_validation_config: DataValidationConfig):
         try:
             self.data_ingestion_artifact = data_ingestion_artifact
             self.data_validation_config = data_validation_config
