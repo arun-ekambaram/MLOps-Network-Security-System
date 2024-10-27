@@ -6,7 +6,7 @@ from network_security.logging.logger import logging
 from scipy.stats import ks_2samp #check two samples to find wheather data drift is there or not
 import pandas as pd
 import os, sys
-from network_security.utils.main_utils.utils import read_yaml_file
+from network_security.utils.main_utils.utils import read_yaml_file,write_yaml_file
 
 class DataValidation:
     def __init__(self,data_ingestion_artifact: DataIngestionArtifact,
@@ -75,7 +75,7 @@ class DataValidation:
             #create directory
             dir_path = os.path.dirname(drift_report_file_path)
             os.makedirs(dir_path,exist_ok=True)
-
+            write_yaml_file(file_path=drift_report_file_path,content=report)
         except Exception as e:
             raise NetworkSecurityException(e,sys)
     
@@ -95,6 +95,25 @@ class DataValidation:
             status = self.validate_number_of_columns(dataframe=test_dataframe)
             if not status:
                 error_message = f"Test Data frame does not contain all columns \n"
+            ## checking datadrift
+            status=self.detect_dataset_drift(base_df=train_dataframe,current_df=test_dataframe)
+            dir_path=os.path.dirname(self.data_validation_config.valid_train_file_path)
+            os.mkdirs(dir_path,exist_ok=True)
+            train_dataframe.to_csv(
+                self.data_validation_config.valid_train_file_path,index=False,header=True
+            )
 
+            test_dataframe.to_csv(
+                self.data_validation_config.valid_test_file_path,index=False,header=True
+            )
+            data_validation_artifact = DataValidationArtifact(
+                validation_status=status,
+                valid_train_file_path=self.data_ingestion_artifact.trained_file_path,
+                valid_test_file_path = self.data_ingestion_artifact.test_file_path,
+                invalid_train_file_path=None,
+                invalid_test_file_path=None,
+                drift_report_file_path=self.data_validation_config.drift_report_file_path,
+
+            )
         except Exception as e:
             raise NetworkSecurityException(e,sys)
