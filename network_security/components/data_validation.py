@@ -15,6 +15,8 @@ class DataValidation:
             self.data_ingestion_artifact = data_ingestion_artifact
             self.data_validation_config = data_validation_config
             self._schema_config = read_yaml_file(SCHEMA_FILE_PATH)
+            # self._column_types = self._schema_config["columns"]
+            # self._numerical_columns = self._schema_config["numerical_columns"]
         except Exception as e:
             raise NetworkSecurityException(e,sys)
 
@@ -36,9 +38,44 @@ class DataValidation:
         except Exception as e:
             raise NetworkSecurityException(e,sys)
         
-    def numerical_columns_check(self,dataframe:pd.DataFrame)->bool:
+    # def numerical_columns_check(self,dataframe:pd.DataFrame)->bool:
+    #     try:
+    #         for column_name in self._numerical_columns:
+    #             if column_name not in dataframe.columns:
+    #                 return False
+    #             expected_type = self._column_types[column_name]
+    #             if dataframe[column_name].dtype != expected_type:
+    #                 logging.error(f"Column '{column_name}' does not match expected type '{expected_type}'")
+    #                 return False
+    #         return True
+
+    #     except Exception as e:
+    #         raise NetworkSecurityException(e,sys)
+
+    def detect_dataset_drift(self,base_df,current_df,threshold=0.5)-> bool:
         try:
-            pass
+            status = True
+            report = {}
+            for column in base_df.columns:
+                d1=base_df[column]
+                d2=current_df[column]
+                #to compare the distribution of two sample
+                is_same_dist=  ks_2samp(d1,d2)
+                if threshold <= is_same_dist.pvalue:
+                    is_found = False
+                else:
+                    is_found=True
+                    status = False
+                report.update({column:{
+                    "p_value": float(is_same_dist.pvalue),
+                    "drift_status":is_found
+                }})
+
+            drift_report_file_path = self.data_validation_config.drift_report_file_path
+            #create directory
+            dir_path = os.path.dirname(drift_report_file_path)
+            os.makedirs(dir_path,exist_ok=True)
+
         except Exception as e:
             raise NetworkSecurityException(e,sys)
     
