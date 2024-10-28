@@ -95,7 +95,7 @@ class DataValidation:
             status = self.validate_number_of_columns(dataframe=test_dataframe)
             if not status:
                 error_message = f"Test Data frame does not contain all columns \n"
-            ## checking datadrift
+            # checking datadrift
             status=self.detect_dataset_drift(base_df=train_dataframe,current_df=test_dataframe)
             dir_path=os.path.dirname(self.data_validation_config.valid_train_file_path)
             os.makedirs(dir_path,exist_ok=True)
