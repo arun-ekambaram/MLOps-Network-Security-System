@@ -5,7 +5,7 @@ from network_security.entity.artifact_entity import DataTransformationArtifact,M
 from network_security.entity.config import ModelTrainerConfig
 from network_security.utils.ml_utils.model.estimator import NetworkModel
 from network_security.utils.main_utils.utils import save_object,load_object
-from network_security.utils.main_utils.utils import load_numpy_array_data
+from network_security.utils.main_utils.utils import load_numpy_array_data,evaluate_models
 from network_security.utils.ml_utils.metric.classification_metric import get_classification_score
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import r2_score
@@ -22,7 +22,7 @@ class ModelTrainer:
         except Exception as e:
             raise NetworkSecurityException(e,sys)
         
-    def train_model(self,x_train,y_train,x_test,y_test):
+    def train_model(self,X_train,y_train,X_test,y_test):
         models = {
             "Random Forest": RandomForestClassifier(verbose=1),
             "Decision Tree": DecisionTreeClassifier(),
@@ -59,7 +59,8 @@ class ModelTrainer:
             }
 
         }
-
+        model_report: dict = evaluate_models(x_train=X_train,y_train=y_train,x_test =X_test,y_test=y_test,
+                                             models=models,param=params)
 
 
         
