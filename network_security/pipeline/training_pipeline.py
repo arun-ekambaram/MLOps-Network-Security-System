@@ -55,7 +55,6 @@ class TrainingPipeline:
             data_transformation_artifact = data_transformation.initiate_data_transformation()
             logging.info(f"Data Transformation Completed and artifact: {data_transformation_artifact}")
             return data_transformation_artifact
-        
         except Exception as e:
             raise NetworkSecurityException(e,sys)
         
@@ -70,4 +69,12 @@ class TrainingPipeline:
         except Exception as e:
             raise NetworkSecurityException(e,sys)
         
-    
+    def run_pipeline(self):
+        try:
+            data_ingestion_artifact = self.start_data_ingestion()
+            data_validation_artifact = self.start_data_validation(data_ingestion_artifact=data_ingestion_artifact)
+            data_transformation_artifact = self.start_data_transformation(data_validation_artifact=data_validation_artifact)
+            model_trainer_artifact = self.start_model_trainer(data_transformation_artifact=data_transformation_artifact)
+            return model_trainer_artifact
+        except Exception as e:
+            raise NetworkSecurityException(e,sys)
