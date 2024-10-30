@@ -17,6 +17,9 @@ class ModelTrainer:
         except Exception as e:
             raise NetworkSecurityException(e,sys)
         
+    def train_model(self,X_train,y_train):
+
+        
     def initiate_model_trainer(self)-> ModelTrainerArtifact:
         try:
             train_file_path = self.data_transformation_artifact.transformed_train_file_path
@@ -33,7 +36,7 @@ class ModelTrainer:
                 test_arr[:,-1],
 
             )
-
+            model = self.train_model(x_train,y_train)
             
         except Exception as e:
             raise NetworkSecurityException(e,sys)
