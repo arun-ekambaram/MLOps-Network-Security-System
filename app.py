@@ -7,6 +7,7 @@ load_dotenv()
 mongo_db_url = os.getenv("MONGODB_URL_KEY")
 print(mongo_db_url)
 import pymongo
+from network_security.utils.ml_utils.model.estimator import NetworkModel
 from network_security.exception.exception import NetworkSecurityException
 from network_security.logging.logger import logging
 from network_security.pipeline.training_pipeline import TrainingPipeline
@@ -38,6 +39,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+from fastapi.templating import Jinja2Templates
+templates = Jinja2Templates(directory="./templates")
+
+
 @app.get("/",tags=["authentication"])
 async def index():
     return RedirectResponse(url="/docs")
@@ -51,6 +56,25 @@ async def train_route():
     except Exception as e:
         raise NetworkSecurityException
     
+@app.get("/predict")
+async def predict_route(request: Reqeust,file:UploadFile=File(...)):
+    try:
+        df = pd.read_csv(file.file)
+        preprocesor = load_object("final_model/preprocessor.pkl")
+        final_model = load_object("final_model/model.pkl")
+        network_model = NetworkModel(preprocessor=preprocesor,model=final_model)
+        print(df.iloc[0])
+        y_pred = network_model.predict(df)
+        print(y_pred)
+        df['predicted_column']=y_pred
+        print(df['predicted_column'])
+        df.to_csv("prediction_output/output.csv")
+        table_html = df.to_html(classes= 'table table-striped')
+        return templates.TemplateResponse("table.html",{"request": request,"table":table_html})
+    except Exception as e:
+        raise NetworkSecurityException(e,sys)
+
+
 
 
     
