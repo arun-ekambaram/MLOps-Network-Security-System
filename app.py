@@ -3,7 +3,7 @@ import os
 import certifi
 ca = certifi.where()
 from dotenv import load_dotenv
-load_dotenv
+load_dotenv()
 mongo_db_url = os.getenv("MONGODB_URL_KEY")
 print(mongo_db_url)
 import pymongo
@@ -22,7 +22,7 @@ from network_security.constants.training_pipeline import DATA_INGESTION_COLLECTI
 
 ## Read the client Mongo
 
-client = pymongo.MongoClient(mongo_db_url,tlsCAfile=ca)
+client = pymongo.MongoClient(mongo_db_url)
 
 database = client[DATA_INGESTION_DATABASE_NAME]
 collection = database[DATA_INGESTION_COLLECTION_NAME]
@@ -50,6 +50,9 @@ async def train_route():
         return Response("Training is Sucessful")
     except Exception as e:
         raise NetworkSecurityException
+    
+
+
     
     #entry point 
     if __name__ == "__main__":
