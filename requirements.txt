@@ -1,7 +1,7 @@
 python-dotenv
 pandas
 numpy
-# pymongo
+pymongo
 pymongo[srv]==3.8
 certifi
 setuptools
@@ -12,6 +12,7 @@ mlflow
 dagshub
 fastapi
 uvicorn
-dotenv
+python-multipart
+# dotenv
 
 ##-e .
