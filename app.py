@@ -57,7 +57,7 @@ async def train_route():
         raise NetworkSecurityException
     
 @app.get("/predict")
-async def predict_route(request: Reqeust,file:UploadFile=File(...)):
+async def predict_route(request: Request,file:UploadFile=File(...)):
     try:
         df = pd.read_csv(file.file)
         preprocesor = load_object("final_model/preprocessor.pkl")
@@ -77,7 +77,6 @@ async def predict_route(request: Reqeust,file:UploadFile=File(...)):
 
 
 
-    
-    #entry point 
-    if __name__ == "__main__":
-        app_run(app,host ="localhost",port =8000)
+#entry point 
+if __name__ == "__main__":
+    app_run(app,host ="localhost",port =8000)
