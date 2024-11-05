@@ -1,8 +1,8 @@
-# Phishing Website Detection System - End-to-End Machine Learning Solution
+#  Network Security System - End-to-End Machine Learning Solution
 
 ## Overview
 
-The **Phishing Website Detection System** is a comprehensive end-to-end machine learning solution designed to identify and mitigate phishing attacks by detecting malicious websites. Phishing attacks remain one of the most prevalent threats on the internet, posing significant risks to individuals and organizations alike. This project aims to provide a robust mechanism for real-time detection of phishing websites, utilizing advanced machine learning techniques within a scalable infrastructure.
+The ** Network Security System ** is a comprehensive end-to-end machine learning solution designed to identify and mitigate phishing attacks by detecting malicious websites. Phishing attacks remain one of the most prevalent threats on the internet, posing significant risks to individuals and organizations alike. This project aims to provide a robust mechanism for real-time detection of phishing websites, utilizing advanced machine learning techniques within a scalable infrastructure.
 
 ## Table of Contents
 
@@ -38,7 +38,7 @@ The architecture of the Phishing Website Detection System consists of several co
 - **Model Training**: Training multiple machine learning models to identify the most effective approach.
 - **Model Deployment**: Deploying the final model to an AWS EC2 instance for real-time predictions.
 
-![Architecture Diagram](./images/architecture_diagram.png)
+<!-- ![Architecture Diagram](./images/architecture_diagram.png) -->
 
 ## Key Features
 
