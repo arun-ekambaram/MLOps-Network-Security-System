@@ -64,7 +64,7 @@ The following technologies and tools were utilized in the development of this pr
 
 The ingestion process is handled by a well-structured ETL pipeline that extracts phishing data from various sources and loads it into MongoDB Atlas. This modular coding approach ensures:
 
-- **Seamless Data Processing**: The code is modular, allowing for easy maintenance and scalability.
+- **Seamless Data Processing**: The code is modular, allowing for easy maintenance and scalability
 - **Flexible Data Retrieval**: Data can be accessed and manipulated as needed for analysis and training.
 
 ### Sample Code Snippet for ETL Pipeline
